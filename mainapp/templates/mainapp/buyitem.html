@@ -7,10 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <form>
-            {% csrf_token %}
-            {{ form1 }}
-            <!--<a href="{% url 'stockitem' %}">add items</a>-->
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form1 }}
+        <a href="{% url 'additem' %}">add item</a>
+        <input type="submit" value="Submit">
     </form>
 </body>
 </html>
