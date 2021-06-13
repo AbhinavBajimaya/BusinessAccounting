@@ -16,7 +16,7 @@ class stockTotalForm(ModelForm):
 class stockItemForm(ModelForm):
     class Meta:
         model=stock_item
-        fields = [ 'items' ,'quantity','current']
+        fields = [ 'items' ,'quantity','in_price','current']
         
 
 class createItemForm(ModelForm):

@@ -35,8 +35,16 @@ def add_item_view(request):
     if request.method=='POST':
         form2=stockItemForm(request.POST)
         if form2.is_valid():
-            
+            in_price_cost =request.POST.get('in_price')
+            item=form2.cleaned_data['items']
             form2.save()
+            if in_price_cost==item.price:
+                pass
+            else:
+                item_select=models.Item.objects.get(id=item.id)
+                item_select.price=in_price_cost
+                item_select.save()
+                
             return redirect('buyitems')
     else:
         form2=stockItemForm()

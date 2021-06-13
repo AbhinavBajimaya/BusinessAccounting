@@ -43,8 +43,11 @@ class stock_item(models.Model):
     current=models.BooleanField(default=True)
     items=models.ForeignKey(Item, on_delete=models.PROTECT)
     quantity=models.PositiveIntegerField()
+    in_price = models.DecimalField(max_digits=8, decimal_places=2)
     def __str__(self):
         return self.items.model_name + " " + "(" + str(self.quantity) + ")"
+
+    
 
 #total bill transactions and list of items/quantities on stocking
 class stock_total(models.Model):
