@@ -2,7 +2,6 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect
 from .import models
 from .forms import stockTotalForm,stockItemForm,createItemForm
-
 # Create your views here.
 
 def home_view(request):
@@ -20,17 +19,24 @@ def buy_item_view(request):
     if request.method == 'POST':
         form1=stockTotalForm(request.POST)
         if form1.is_valid():
-            #form.save()
-            return HttpResponseRedirect('home')
+            for item in (models.stock_item.objects.filter(current=True)):
+                item.current=False
+                item.items.quantity += item.quantity
+                item.save()
+                item.items.save()
+            form1.save()
+            return redirect('home')
     else:
-       form1= stockTotalForm()
+        
+        form1= stockTotalForm()
     return render(request, 'mainapp/buyitem.html', {'form1':form1 })
 
 def add_item_view(request):
     if request.method=='POST':
         form2=stockItemForm(request.POST)
         if form2.is_valid():
-            #form.save()
+            
+            form2.save()
             return redirect('buyitems')
     else:
         form2=stockItemForm()

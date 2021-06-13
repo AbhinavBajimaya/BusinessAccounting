@@ -40,6 +40,7 @@ class Customer(models.Model):
 
 #individual items and quantities on stocking
 class stock_item(models.Model):    
+    current=models.BooleanField(default=True)
     items=models.ForeignKey(Item, on_delete=models.PROTECT)
     quantity=models.PositiveIntegerField()
     def __str__(self):

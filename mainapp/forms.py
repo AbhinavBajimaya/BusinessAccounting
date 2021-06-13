@@ -8,11 +8,16 @@ class stockTotalForm(ModelForm):
         model = stock_total
         fields=['importer', 'items']
 
+    def __init__(self, *args, **kwargs):
+        super(stockTotalForm, self).__init__(*args, **kwargs)
+        self.fields['items'].queryset = stock_item.objects.filter(current=True)
+
 
 class stockItemForm(ModelForm):
     class Meta:
         model=stock_item
-        fields = [ 'items' ,'quantity']
+        fields = [ 'items' ,'quantity','current']
+        
 
 class createItemForm(ModelForm):
     class Meta:
