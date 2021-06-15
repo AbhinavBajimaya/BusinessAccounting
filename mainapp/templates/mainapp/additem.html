@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+
 </head>
 <body>
     <form action="" method="post">
@@ -13,5 +15,15 @@
         <a href="{% url 'createitem' way=1 %}">create item</a>
         <input type="submit" value="Submit">
     </form>
+    <script>
+         $(document).ready(function () {
+                $('#id_quantity').keyup(calculate);
+                $('#id_in_price').keyup(calculate);
+            });
+            function calculate(e) {
+                $('#id_total_price').val($('#id_quantity').val() * $('#id_in_price').val());
+            }
+        
+    </script>
 </body>
 </html>
