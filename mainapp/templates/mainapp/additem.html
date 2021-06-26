@@ -1,20 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+{% extends "mainapp/base.html" %}
 
-</head>
-<body>
+    {% block title %} add item {% endblock %}
+    {% block form %}
     <form action="" method="post">
-        {% csrf_token %}
-        {{ form2 }}
-        <a href="{% url 'createitem' way=1 %}">create item</a>
-        <input type="submit" value="Submit">
+    {% csrf_token %}
+    {{ form2 }}
+    <a href="{% url 'createitem' way=1 %}">create item</a>
+    <input type="submit" value="Submit">
     </form>
+    {% endblock %}
+    
+    {% block extrajavascript %}
     <script>
          $(document).ready(function () {
                 $('#id_quantity').keyup(calculate);
@@ -25,5 +21,4 @@
             }
         
     </script>
-</body>
-</html>
+    {% endblock %)}

@@ -1,15 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
+{% extends "mainapp/base.html" %}
+
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
     <a href="{% url 'viewstock' %}"><h1>View All Stock</h1></a>    
     <a href="{% url 'createitem' way=2 %}"><h1>Create item</h1></a>
     <a href="{% url 'buyitems' %}"><h1>Buy item</h1></a>
-    
-</body>
-</html>
+    <a href="{% url 'createimporter' %}"><h1>Create Importer</h1></a>
+    <a href="{% url 'viewimporters' %}"><h1>View Importers</h1></a>
+{% endblock %}
+
+{% block form %}{% endblock %}
+
+{% block extrajavascript %}{% endblock %}

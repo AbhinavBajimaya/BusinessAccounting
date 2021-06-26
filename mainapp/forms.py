@@ -1,12 +1,12 @@
 from django.forms import ModelForm
-from .models import stock_item,stock_total,Item
+from .models import stock_item,stock_total,Item,Importer
 
 
 
 class stockTotalForm(ModelForm):
     class Meta:
         model = stock_total
-        fields=['importer', 'items']
+        fields=['importer', 'items','total_price']
 
     def __init__(self, *args, **kwargs):
         super(stockTotalForm, self).__init__(*args, **kwargs)
@@ -24,6 +24,13 @@ class createItemForm(ModelForm):
         model= Item
         fields = ['item_type', 'model_name', 'company_name',
                    'price', 'description']
+
+class createImporterForm(ModelForm):
+    class Meta:
+        model = Importer
+        fields = ['name','owner_name','address','phone_number','vat_number','pan_number']
+
+
 
 
 

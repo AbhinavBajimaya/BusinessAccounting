@@ -1,39 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-</head>
-<body>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form1 }}
-        <a href="{% url 'additem' %}">add item</a>
-        <input type="submit" value="Submit">
-    </form>
-    <h4>Total Price:</h4>
-    <h3 id="sum"></h3>
+{% extends "mainapp/base.html" %}
 
-    <script>    
-        $(document).change(function(){
-            var items = [];
-            var items2 =[];
-            $('#id_items option:selected').each(function () { items.push($(this).text());     
-    });
-    items.forEach(function (item) {
-                item = parseFloat(item.split("=").pop().trim());
-                items2.push(item);
-            });
-         var sum = items2.reduce(function (a, b) {
-                return a + b;
-            }, 0);
-            
-         document.getElementById("sum").innerHTML = sum;
+{% block title %}Buy Items{% endblock %}
+
+{% block body %} {% endblock %}
+
+{% block form %}
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form1 }}
+    <a href="{% url 'additem' %}">add item</a>
+    <input type="submit" value="Submit">
+</form>
+<h4>Total Price:</h4>
+<h3 id="sum"></h3>
+{% endblock %}
+
+{% block extrajavascript %}
+<script>
+    $(document).change(function () {
+        var items = [];
+        var items2 = [];
+        $('#id_items option:selected').each(function () {
+            items.push($(this).text());
         });
+        items.forEach(function (item) {
+            item = parseFloat(item.split("=").pop().trim());
+            items2.push(item);
+        });
+        var sum = items2.reduce(function (a, b) {
+            return a + b;
+        }, 0);
 
-    </script>
-</body>
-</html>
+        $('#id_total_price').val(sum);
+    });
+
+</script>{% endblock %}

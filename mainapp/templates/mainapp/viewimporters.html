@@ -1,0 +1,18 @@
+{% extends "mainapp/base.html" %}
+{% load static %}
+
+
+{% block title %}View Importers{% endblock %}
+
+{% block body %}
+
+{% for i in importers %}
+<h2>
+    <li>{{i.name}}</li>
+</h2>
+{% endfor %}
+{% endblock %}
+
+{% block form %}{% endblock %}
+
+{% block extrajavascript %}{% endblock %}

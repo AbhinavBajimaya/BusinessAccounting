@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect
 from .import models
-from .forms import stockTotalForm,stockItemForm,createItemForm
+from .forms import stockTotalForm,stockItemForm,createItemForm,createImporterForm
 from datetime import datetime
 
 # Create your views here.
@@ -22,17 +22,20 @@ def view_all_stock_view(request):
 def buy_item_view(request):
     if request.method == 'POST':
         form1=stockTotalForm(request.POST) 
-        if form1.is_valid():
-            items=request.POST.get('items')
-            print(items)
-            #for item in (models.stock_item.objects.filter(current=True)):
-            #    item.current=False
-            #    item.items.quantity += item.quantity
-            #    item.items.save()
-            #    item.save()
-            #    item.items.set_is_stock()
-                
-            #form1.save()
+        if form1.is_valid():   
+            for item in (models.stock_item.objects.filter(current=True)):
+                item.current=False
+                item.items.quantity += item.quantity
+                item.items.save()
+                item.save()
+                item.items.set_is_stock()            
+            form1.save()
+            last_in = models.stock_total.objects.last()
+            account=models.account.objects.first()
+            account.expense_out += last_in.total_price
+            sum=account.get_stock_price()
+            account.save()
+                        
             return redirect('home')
     else:
         
@@ -74,6 +77,25 @@ def create_new_item_view(request, way):
     
     return render(request, 'mainapp/createnewitem.html', {'form3':form3 })
     
+def view_all_importers(request):
+    importers=models.Importer.objects.all()
+    return render(request, 'mainapp/viewimporters.html', {'importers' :importers})
+
+
+def create_importer(request):
+    if request.method=='POST':
+        form=createImporterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form=createImporterForm()
+    return render(request, 'mainapp/createimporter.html', {'form' :form})
+        
+
+
+
+
     
     
     
