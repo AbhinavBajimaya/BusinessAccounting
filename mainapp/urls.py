@@ -12,5 +12,11 @@ urlpatterns=[
     path('additem', views.add_item_view, name="additem"),
     path('createitem/<int:way>/', views.create_new_item_view, name='createitem'),
     path('createimporter',views.create_importer, name='createimporter'),
-    path('viewimporters',views.view_all_importers,name='viewimporters')
+    path('viewimporters',views.view_all_importers,name='viewimporters'),
+
+    #selling portion
+    path('saleitems', views.sale_item_view, name="saleitems"),
+    path('addsaleitem', views.add_sale_item_view, name="addsaleitem"),
+    path('createcustomer', views.create_customer, name='createcustomer'),
+    path('viewcustomers', views.view_all_customers, name='viewcustomers'),
 ]

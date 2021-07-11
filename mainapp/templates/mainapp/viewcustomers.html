@@ -1,0 +1,18 @@
+{% extends "mainapp/base.html" %}
+{% load static %}
+
+
+{% block title %}View Customers{% endblock %}
+
+{% block body %}
+
+{% for c in customers %}
+<h2>
+    <li>{{c.name}}</li>
+</h2>
+{% endfor %}
+{% endblock %}
+
+{% block form %}{% endblock %}
+
+{% block extrajavascript %}{% endblock %}

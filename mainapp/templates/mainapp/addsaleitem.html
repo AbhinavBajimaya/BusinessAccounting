@@ -1,0 +1,23 @@
+{% extends "mainapp/base.html" %}
+
+{% block title %} add sale item {% endblock %}
+{% block form %}
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form2 }}
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
+
+{% block extrajavascript %}
+<script>
+    $(document).ready(function () {
+        $('#id_quantity').keyup(calculate);
+        $('#id_sale_price').keyup(calculate);
+    });
+    function calculate(e) {
+        $('#id_total_price').val($('#id_quantity').val() * $('#id_sale_price').val());
+    }
+
+</script>
+{% endblock %}

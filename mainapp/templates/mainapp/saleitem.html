@@ -1,0 +1,37 @@
+{% extends "mainapp/base.html" %}
+
+{% block title %}Sale Items{% endblock %}
+
+{% block body %} {% endblock %}
+
+{% block form %}
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form1 }}
+    <a href="{% url 'addsaleitem' %}">Add item</a>
+    <input type="submit" value="Submit">
+</form>
+<h4>Total Price:</h4>
+<h3 id="sum"></h3>
+{% endblock %}
+
+{% block extrajavascript %}
+<script>
+    $(document).change(function () {
+        var items = [];
+        var items2 = [];
+        $('#id_items option:selected').each(function () {
+            items.push($(this).text());
+        });
+        items.forEach(function (item) {
+            item = parseFloat(item.split("=").pop().trim());
+            items2.push(item);
+        });
+        var sum = items2.reduce(function (a, b) {
+            return a + b;
+        }, 0);
+
+        $('#id_total_price').val(sum);
+    });
+
+</script>{% endblock %}

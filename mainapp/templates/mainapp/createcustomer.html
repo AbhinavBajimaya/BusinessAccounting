@@ -1,0 +1,15 @@
+{% extends "mainapp/base.html" %}
+
+{% block title %} Create Customer {% endblock %}
+
+{% block body %}{% endblock %}
+
+{% block form %}
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
+
+{% block extrajavascript %}{% endblock %}

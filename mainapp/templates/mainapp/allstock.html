@@ -6,8 +6,25 @@
 {% block title %} All Stock {% endblock %}
 
 {% block body %}
-    {% for i in allstock %}
-      <h2><li>{{i.model_name}}</li></h2>
-      {% endfor %}
+
+<table>
+  <tr>
+    <th>Item</th>
+    <th>Company</th>
+    <th>Quantity</th>
+    <th>Price</th>
+    <th>Total Price</th>
+  </tr>
+  {% for i in allstock %}
+  <tr>
+    <td>{{i.model_name }}</td>
+    <td>{{i.company_name}}</td>
+    <td>{{i.quantity}}</td>
+    <td>{{i.price }}</td>
+  </tr>
+  {% endfor %}
+  
+</table>
+      <p>{{ stock_price }}</p>
 {% endblock %}
      
