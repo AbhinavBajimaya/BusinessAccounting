@@ -19,4 +19,8 @@ urlpatterns=[
     path('addsaleitem', views.add_sale_item_view, name="addsaleitem"),
     path('createcustomer', views.create_customer, name='createcustomer'),
     path('viewcustomers', views.view_all_customers, name='viewcustomers'),
+
+    #credits portion
+    path('viewcreditimporters',views.view_credit_importers, name='viewcreditimporters'),
+    path('impcreditdetail/<int:id>/',views.imp_credit_detail,name='impcreditdetail'),
 ]

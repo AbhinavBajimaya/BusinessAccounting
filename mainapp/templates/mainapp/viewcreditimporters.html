@@ -1,0 +1,20 @@
+{% extends "mainapp/base.html" %}
+{% load static %}
+
+
+{% block title %}View Credits{% endblock %}
+
+{% block body %}
+
+{% for i in importers %}
+<h2>
+    <a href="{% url 'impcreditdetail' id=i.id %}">
+        <li>{{i.name}}</li>
+    </a>
+</h2>
+{% endfor %}
+{% endblock %}
+
+{% block form %}{% endblock %}
+
+{% block extrajavascript %}{% endblock %}

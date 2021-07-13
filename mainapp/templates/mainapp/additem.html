@@ -4,7 +4,9 @@
     {% block form %}
     <form action="" method="post">
     {% csrf_token %}
-    {{ form2 }}
+    <table>
+        {{ form2.as_table }}
+    </table>
     <a href="{% url 'createitem' way=1 %}">create item</a>
     <input type="submit" value="Submit">
     </form>

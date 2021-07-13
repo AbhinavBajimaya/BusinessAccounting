@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from .import models
 from .forms import stockTotalForm,stockItemForm,createItemForm,createImporterForm,saleItemForm,saleTotalForm,createCustomerForm
 from datetime import datetime
+import time
 
 # Create your views here.
 
@@ -35,10 +36,14 @@ def buy_item_view(request):
                 item.save()
                 item.items.set_is_stock()            
             form1.save()
+
             last_in = models.stock_total.objects.last()
             account=models.account.objects.first()
+            last_importer=last_in.importer
+            last_importer.total_amount += last_in.total_price
+            last_importer.total_credit +=last_in.credit
             account.expense_out += last_in.total_price
-            sum=account.get_stock_price()
+            last_importer.save()
             account.save()
                         
             return redirect('home')
@@ -128,14 +133,15 @@ def sale_item_view(request):
                 item.items.set_is_stock()
             form1.save()
             last_in = models.sale_total.objects.last()
+            last_customer = last_in.customer
+            last_customer.total_amount += last_in.total_price
+            last_customer.total_credit += last_in.credit
             account = models.account.objects.first()
             account.revenue_in += last_in.total_price
-            sum = account.get_stock_price()
+            last_customer.save()
             account.save()
-
             return redirect('home')
     else:
-
         form1 = saleTotalForm()
     return render(request, 'mainapp/saleitem.html', {'form1': form1})
 
@@ -151,7 +157,26 @@ def add_sale_item_view(request):
         form2 = saleItemForm()
     return render(request, 'mainapp/addsaleitem.html', {'form2': form2})
 
+
+def view_credit_importers(request):
+    importers = models.Importer.objects.exclude(total_credit=0)
+    return render(request, 'mainapp/viewcreditimporters.html', {'importers': importers})
         
+def imp_credit_detail(request, id):
+    importer = models.Importer.objects.get(id=id)
+
+    if request.method == 'POST':
+        credit=request.POST['credit']
+        importer.total_credit -= int(credit)
+        importer.save()
+        #enter success message here#
+        
+        return redirect('viewcreditimporters')
+        
+
+    return render(request, 'mainapp/impcreditdetail.html', {"importer": importer})
+        
+    
 
 
 

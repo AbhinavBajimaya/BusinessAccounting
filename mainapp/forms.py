@@ -6,7 +6,7 @@ from .models import stock_item,stock_total,Item,Importer,Customer,sale_item,sale
 class stockTotalForm(ModelForm):
     class Meta:
         model = stock_total
-        fields=['importer', 'items','total_price']
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super(stockTotalForm, self).__init__(*args, **kwargs)
@@ -16,19 +16,18 @@ class stockTotalForm(ModelForm):
 class stockItemForm(ModelForm):
     class Meta:
         model=stock_item
-        fields = [ 'items' ,'quantity','in_price','current','total_price']
+        fields = '__all__'
         
 
 class createItemForm(ModelForm):
     class Meta:
         model= Item
-        fields = ['item_type', 'model_name', 'company_name',
-                   'price', 'description']
+        fields = '__all__'
 
 class createImporterForm(ModelForm):
     class Meta:
         model = Importer
-        fields = ['name','owner_name','address','phone_number','vat_number','pan_number']
+        fields = '__all__'
 
 
 #############################################################################################
@@ -36,7 +35,7 @@ class createImporterForm(ModelForm):
 class saleTotalForm(ModelForm):
     class Meta:
         model = sale_total
-        fields = ['customer', 'items', 'total_price']
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super(saleTotalForm, self).__init__(*args, **kwargs)
@@ -46,13 +45,13 @@ class saleTotalForm(ModelForm):
 class saleItemForm(ModelForm):
     class Meta:
         model = sale_item
-        fields = ['items', 'quantity', 'sale_price', 'current', 'total_price']
+        fields = '__all__'
 
 
 class createCustomerForm(ModelForm):
     class Meta:
         model = Customer
-        fields = ['name', 'owner_name', 'address', 'phone_number', 'vat_number', 'pan_number']
+        fields = '__all__'
 
 
 

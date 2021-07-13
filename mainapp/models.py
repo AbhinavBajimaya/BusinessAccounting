@@ -33,6 +33,8 @@ class Importer(models.Model):
     phone_number=models.DecimalField(max_digits=10, decimal_places=0)
     vat_number=models.DecimalField(max_digits=15, decimal_places=0)
     pan_number=models.DecimalField(max_digits=15, decimal_places=0)
+    total_amount = models.DecimalField(max_digits=15, decimal_places=0,default=0)
+    total_credit = models.DecimalField(max_digits=15, decimal_places=0,default=0)
     def __str__(self):
         return self.name 
 
@@ -44,6 +46,8 @@ class Customer(models.Model):
     phone_number=models.DecimalField(max_digits=10, decimal_places=0)
     vat_number=models.DecimalField(max_digits=15, decimal_places=0)
     pan_number=models.DecimalField(max_digits=15, decimal_places=0)
+    total_amount = models.DecimalField(max_digits=15, decimal_places=0,default=0)
+    total_credit = models.DecimalField(max_digits=15, decimal_places=0,default=0)
     def __str__(self):
         return self.name
 
@@ -65,6 +69,8 @@ class stock_total(models.Model):
     items=models.ManyToManyField(stock_item)
     added_at = models.DateTimeField(auto_now_add=True)
     total_price = models.DecimalField(max_digits=15, decimal_places=2,default=0)
+    total_paid = models.DecimalField(max_digits=15, decimal_places=0, default=0)
+    credit = models.DecimalField(max_digits=15, decimal_places=0,default=0)
 
     def __str__(self):
         return self.importer.name + " " + self.added_at.strftime('%m/%d/%Y')
@@ -95,6 +101,8 @@ class sale_total(models.Model):
     items=models.ManyToManyField(sale_item)  
     sold_at = models.DateTimeField(auto_now_add=True)  
     total_price = models.DecimalField(max_digits=15, decimal_places=2, default=0)
+    total_paid = models.DecimalField(max_digits=15, decimal_places=0, default=0)
+    credit = models.DecimalField(max_digits=15, decimal_places=0, default=0)
 
     def __str__(self):
         return self.customer.name + " " + self.sold_at.strftime('%m%d%y')
@@ -111,6 +119,7 @@ class account(models.Model):
     expense_out = models.DecimalField(max_digits=12, decimal_places=2,default=0)
     revenue_in  = models.DecimalField(max_digits=12, decimal_places=2,default=0)
     stock_price  = models.DecimalField(max_digits=12, decimal_places=2,default=0)
+
     
     def get_stock_price(self):
         sum=0

@@ -7,7 +7,9 @@
 {% block form %}
 <form action="" method="post">
     {% csrf_token %}
-    {{ form1 }}
+    <table>
+        {{ form1.as_table }}
+    </table>
     <a href="{% url 'additem' %}">add item</a>
     <input type="submit" value="Submit">
 </form>
