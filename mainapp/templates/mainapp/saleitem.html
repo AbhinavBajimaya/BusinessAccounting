@@ -35,5 +35,12 @@
 
         $('#id_total_price').val(sum);
     });
+    $(document).ready(function () {
+            $('#id_total_price').keyup(calculate);
+            $('#id_total_paid').keyup(calculate);
+        });
+        function calculate(e) {
+            $('#id_credit').val($('#id_total_price').val() - $('#id_total_paid').val());
+        }
 
 </script>{% endblock %}

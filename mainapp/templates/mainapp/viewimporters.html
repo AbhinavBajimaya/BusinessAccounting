@@ -8,7 +8,10 @@
 
 {% for i in importers %}
 <h2>
-    <li>{{i.name}}</li>
+   <a href="{% url 'impdetail' id=i.id %}">
+       <li>{{i.name}}</li>
+
+   </a>
 </h2>
 {% endfor %}
 {% endblock %}

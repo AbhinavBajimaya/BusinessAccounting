@@ -91,6 +91,12 @@ def view_all_importers(request):
     importers=models.Importer.objects.all()
     return render(request, 'mainapp/viewimporters.html', {'importers' :importers})
 
+def imp_detail(request ,id):
+    importer = models.Importer.objects.get(id=id)
+    return render(request, 'mainapp/impdetail.html', {'importer': importer})
+
+
+
 
 def create_importer(request):
     if request.method=='POST':
@@ -118,6 +124,10 @@ def create_customer(request):
     else:
         form = createCustomerForm()
     return render(request, 'mainapp/createcustomer.html', {'form': form})
+
+def cus_detail(request ,id):
+    customer = models.Customer.objects.get(id=id)
+    return render(request, 'mainapp/cusdetail.html', {'customer': customer})
 
 
 
@@ -168,6 +178,7 @@ def imp_credit_detail(request, id):
     if request.method == 'POST':
         credit=request.POST['credit']
         importer.total_credit -= int(credit)
+        
         importer.save()
         #enter success message here#
         
@@ -175,6 +186,26 @@ def imp_credit_detail(request, id):
         
 
     return render(request, 'mainapp/impcreditdetail.html', {"importer": importer})
+
+
+def view_credit_customers(request):
+    customers = models.Customer.objects.exclude(total_credit=0)
+    return render(request, 'mainapp/viewcreditcustomers.html', {'customers': customers})
+        
+def cus_credit_detail(request, id):
+    customer = models.Customer.objects.get(id=id)
+
+    if request.method == 'POST':
+        credit=request.POST['credit']
+        customer.total_credit -= int(credit)
+        
+        customer.save()
+        #enter success message here#
+        
+        return redirect('viewcreditcustomers')
+        
+
+    return render(request, 'mainapp/cuscreditdetail.html', {"customer": customer})
         
     
 

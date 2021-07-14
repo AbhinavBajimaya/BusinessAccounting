@@ -2,15 +2,14 @@
 {% load static %}
 
 
-{% block title %}View Customers{% endblock %}
+{% block title %}View Credits{% endblock %}
 
 {% block body %}
 
 {% for c in customers %}
 <h2>
-    <a href="{% url 'cusdetail' id=c.id %}">
+    <a href="{% url 'cuscreditdetail' id=c.id %}">
         <li>{{c.name}}</li>
-
     </a>
 </h2>
 {% endfor %}

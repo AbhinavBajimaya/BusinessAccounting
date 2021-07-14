@@ -23,4 +23,12 @@ urlpatterns=[
     #credits portion
     path('viewcreditimporters',views.view_credit_importers, name='viewcreditimporters'),
     path('impcreditdetail/<int:id>/',views.imp_credit_detail,name='impcreditdetail'),
+    
+    path('viewcreditcustomers',views.view_credit_customers, name='viewcreditcustomers'),
+    path('cuscreditdetail/<int:id>/',views.cus_credit_detail,name='cuscreditdetail'),
+
+    path('impdetail/<int:id>/',views.imp_detail, name='impdetail'),
+    path('cusdetail/<int:id>/',views.cus_detail, name='cusdetail'),
+
+
 ]

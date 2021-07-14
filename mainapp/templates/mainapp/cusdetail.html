@@ -1,0 +1,22 @@
+{% extends "mainapp/base.html" %}
+{% load static %}
+
+
+{% block title %} {{customer.name}} {% endblock %}
+
+{% block body %}
+
+<h3>Name: {{customer.name}}</h3>
+<h3>Owner: {{customer.owner_name}}</h3>
+<h3>Ph.no: {{customer.phone_number}}</h3>
+<h3>VAT: {{customer.vat_number}}</h3>
+<h3>PAN: {{customer.pan_number}}</h3>
+<h3>Description: {{customer.description}}</h3>
+<h3>Total Amount Bought: {{customer.total_amount}}</h3>
+<h3>Credits: {{customer.total_credit}}</h3>
+
+{% endblock %}
+
+{% block form %}{% endblock %}
+
+{% block extrajavascript %}{% endblock %}

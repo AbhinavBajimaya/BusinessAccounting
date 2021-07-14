@@ -1,0 +1,22 @@
+{% extends "mainapp/base.html" %}
+{% load static %}
+
+
+{% block title %} {{importer.name}} {% endblock %}
+
+{% block body %}
+
+<h3>Name: {{importer.name}}</h3>
+<h3>Owner: {{importer.owner_name}}</h3>
+<h3>Ph.no: {{importer.phone_number}}</h3>
+<h3>VAT: {{importer.vat_number}}</h3>
+<h3>PAN: {{importer.pan_number}}</h3>
+<h3>Description: {{importer.description}}</h3>
+<h3>Total Amount Bought: {{importer.total_amount}}</h3>
+<h3>Credits: {{importer.total_credit}}</h3>
+
+{% endblock %}
+
+{% block form %}{% endblock %}
+
+{% block extrajavascript %}{% endblock %}
