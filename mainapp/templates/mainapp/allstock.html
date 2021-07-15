@@ -4,21 +4,52 @@
 
   
 {% block title %} All Stock {% endblock %}
+{% block css %}
+<style>
 
-{% block body %}
+  #stocktable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #stocktable td, #stocktable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #stocktable tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #stocktable tr:hover {background-color: #ddd;}
+  
+  #stocktable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+  }
+  </style>
+  {% endblock %}
+  
+  {% block body %}
 
-<table>
+<table id="stocktable">
   <tr>
-    <th>Item</th>
+    <th>Category</th>
+    <th>Model</th>
     <th>Company</th>
+    <th>Size</th>
     <th>Quantity</th>
     <th>Price</th>
     <th>Total Price</th>
   </tr>
   {% for i in allstock %}
   <tr>
+    <td>{{i.item_type}}</td>
     <td>{{i.model_name }}</td>
     <td>{{i.company_name}}</td>
+    <td>{{i.size}}</td>
     <td>{{i.quantity}}</td>
     <td>{{i.price }}</td>
   </tr>

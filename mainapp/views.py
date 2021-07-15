@@ -160,9 +160,15 @@ def add_sale_item_view(request):
     if request.method == 'POST':
         form2 = saleItemForm(request.POST)
         if form2.is_valid():
-            form2.save()
-            
-            return redirect('saleitems')
+            quantity = request.POST.get('quantity')
+            item =request.POST.get('items')
+            print(item)
+            req_item=models.Item.objects.get(id=item)
+            if int(quantity) < req_item.quantity:
+                form2.save()
+                return redirect('saleitems')
+            else:
+                return HttpResponseRedirect('Error')
     else:
         form2 = saleItemForm()
     return render(request, 'mainapp/addsaleitem.html', {'form2': form2})

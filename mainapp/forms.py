@@ -1,9 +1,11 @@
 from django.forms import ModelForm
-from .models import stock_item,stock_total,Item,Importer,Customer,sale_item,sale_total
+from .models import stock_item,stock_total,Item,Importer,Customer,sale_item,sale_total,Item_type
+
 
 
 
 class stockTotalForm(ModelForm):
+    
     class Meta:
         model = stock_total
         fields = '__all__'
