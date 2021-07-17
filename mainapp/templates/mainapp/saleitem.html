@@ -13,8 +13,8 @@
     <a href="{% url 'addsaleitem' %}">Add item</a>
     <input type="submit" value="Submit">
 </form>
-<h4>Total Price:</h4>
-<h3 id="sum"></h3>
+<h4>Total InPrice:</h4><h4 id="totalcostprice">{{ sum }}</h4>
+
 {% endblock %}
 
 {% block extrajavascript %}
@@ -41,6 +41,12 @@
         });
         function calculate(e) {
             $('#id_credit').val($('#id_total_price').val() - $('#id_total_paid').val());
+            $('#id_profit').val($('#id_total_price').val() - parseInt($('#totalcostprice').html()));
         }
+    $(document).ready(function () {
+            $('#id_total_price').keyup(calculate1);
+            
+        });
+        
 
 </script>{% endblock %}

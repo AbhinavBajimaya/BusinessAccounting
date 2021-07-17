@@ -153,7 +153,12 @@ def sale_item_view(request):
             return redirect('home')
     else:
         form1 = saleTotalForm()
-    return render(request, 'mainapp/saleitem.html', {'form1': form1})
+        a = models.sale_item.objects.filter(current=True)
+        sum = 0
+        for b in a:
+            sum += b.items.price*b.quantity
+
+    return render(request, 'mainapp/saleitem.html', {'form1': form1, 'sum': sum})
 
 
 def add_sale_item_view(request):
@@ -166,7 +171,14 @@ def add_sale_item_view(request):
             req_item=models.Item.objects.get(id=item)
             if int(quantity) < req_item.quantity:
                 form2.save()
-                return redirect('saleitems')
+                a=models.sale_item.objects.filter(current=True)
+                sum=0
+                for b in a :
+                    sum += b.items.price*b.quantity
+
+                form1=saleTotalForm()
+                return render(request, 'mainapp/saleitem.html', {'form1': form1, 'sum': sum})
+                #return redirect('saleitems')
             else:
                 return HttpResponseRedirect('Error')
     else:

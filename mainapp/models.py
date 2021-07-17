@@ -109,8 +109,9 @@ class sale_total(models.Model):
     total_price = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     total_paid = models.DecimalField(max_digits=15, decimal_places=0, default=0)
     credit = models.DecimalField(max_digits=15, decimal_places=0, default=0)
+    profit = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     def __str__(self):
-        a = self.added_at
+        a = self.sold_at
         b = convert_AD_to_BS(a.year, a.month, a.day)
         c = bsdate(b[0], b[1], b[2]).strftime("%B %d %Y, %A", lang='ne')
         return self.customer.name + " " + str(c)
