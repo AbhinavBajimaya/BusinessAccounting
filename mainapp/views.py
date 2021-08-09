@@ -169,18 +169,12 @@ def add_sale_item_view(request):
             item =request.POST.get('items')
             print(item)
             req_item=models.Item.objects.get(id=item)
-            if int(quantity) < req_item.quantity:
+            if int(quantity) <= req_item.quantity:
                 form2.save()
-                a=models.sale_item.objects.filter(current=True)
-                sum=0
-                for b in a :
-                    sum += b.items.price*b.quantity
-
-                form1=saleTotalForm()
-                return render(request, 'mainapp/saleitem.html', {'form1': form1, 'sum': sum})
-                #return redirect('saleitems')
+                
+                return redirect('saleitems')
             else:
-                return HttpResponseRedirect('Error')
+                return HttpResponseRedirect('itemnotinstock')
     else:
         form2 = saleItemForm()
     return render(request, 'mainapp/addsaleitem.html', {'form2': form2})
