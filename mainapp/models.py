@@ -19,7 +19,7 @@ class Item(models.Model):
     size=models.CharField(max_length=30,null=True,blank=True)
     quantity=models.PositiveIntegerField(default=0)
     price = models.DecimalField(max_digits=15, decimal_places=2)  
-    is_stock=models.BooleanField(default=False)
+    is_stock=models.BooleanField(default=True)
     total_in_quantity = models.PositiveIntegerField(default=0)
     def __str__(self):
         if str(self.size)=="None":
@@ -38,9 +38,9 @@ class Item(models.Model):
 #from where items are imported
 class Importer(models.Model):
     name=models.CharField(max_length=50)
-    owner_name=models.CharField(max_length=50)
-    address=models.CharField(max_length=50)
-    phone_number=models.DecimalField(max_digits=10, decimal_places=0)
+    owner_name=models.CharField(max_length=50,blank=True,null=True)
+    address = models.CharField(max_length=50, blank=True, null=True)
+    phone_number = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True)
     vat_number = models.DecimalField(max_digits=15, decimal_places=0, null=True, blank=True)
     pan_number = models.DecimalField(max_digits=9, decimal_places=0, null=True, blank=True)
     total_amount = models.DecimalField(max_digits=15, decimal_places=0,default=0)
@@ -51,10 +51,10 @@ class Importer(models.Model):
 #details of customer
 class Customer(models.Model):
     name = models.CharField(max_length=50)
-    owner_name = models.CharField(max_length=50, null=True)
-    address=models.CharField(max_length=50)
-    phone_number=models.DecimalField(max_digits=10, decimal_places=0)
-    vat_number = models.DecimalField(max_digits=15, decimal_places=0, null=True,blank=True)
+    owner_name = models.CharField(max_length=50, blank=True, null=True)
+    address = models.CharField(max_length=50, blank=True, null=True)
+    phone_number = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True)
+    vat_number = models.DecimalField(max_digits=15, decimal_places=0, null=True, blank=True)
     pan_number = models.DecimalField(max_digits=9, decimal_places=0, null=True, blank=True)
     total_amount = models.DecimalField(max_digits=15, decimal_places=0,default=0)
     total_credit = models.DecimalField(max_digits=15, decimal_places=0,default=0)
@@ -79,10 +79,11 @@ class stock_total(models.Model):
     total_price = models.DecimalField(max_digits=15, decimal_places=2,default=0)
     total_paid = models.DecimalField(max_digits=15, decimal_places=0, default=0)
     credit = models.DecimalField(max_digits=15, decimal_places=0,default=0)
+    
     def __str__(self):
         a=self.added_at
         b=convert_AD_to_BS(a.year, a.month, a.day)
-        c = bsdate(b[0], b[1], b[2]).strftime("%B %d %Y, %A", lang='ne')
+        c = bsdate(b[0], b[1], b[2]).strftime("%B %d %Y, %A", lang='en')
         return self.importer.name + " " + str(c)
     def get_total_price(self):
         total = 0
@@ -105,15 +106,15 @@ class sale_item(models.Model):
 class sale_total(models.Model):
     customer=models.ForeignKey(Customer, on_delete=models.PROTECT, blank=True, null=True)
     items=models.ManyToManyField(sale_item)  
-    sold_at = models.DateTimeField(auto_now_add=True)  
+    sold_att = models.DateField(auto_now_add=True)  
     total_price = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     total_paid = models.DecimalField(max_digits=15, decimal_places=0, default=0)
     credit = models.DecimalField(max_digits=15, decimal_places=0, default=0)
     profit = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     def __str__(self):
-        a = self.sold_at
+        a = self.sold_att
         b = convert_AD_to_BS(a.year, a.month, a.day)
-        c = bsdate(b[0], b[1], b[2]).strftime("%B %d %Y, %A", lang='ne')
+        c = bsdate(b[0], b[1], b[2]).strftime("%B %d %Y, %A", lang='en')
         return self.customer.name + " " + str(c)
     def get_total_price(self):
         total = 0
