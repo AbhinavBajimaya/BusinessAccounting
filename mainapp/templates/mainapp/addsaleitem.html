@@ -2,6 +2,8 @@
 
 {% block title %} add sale item {% endblock %}
 {% block form %}
+<input type="text" id="get_input" onkeyup="Func()">
+
 <form action="" method="post">
     {% csrf_token %}
     <table>
@@ -13,6 +15,25 @@
 
 {% block extrajavascript %}
 <script>
+
+    function Func() {
+            var input, filter, a;
+            input = document.getElementById("get_input");
+            filter = input.value.toUpperCase();
+            div = document.getElementById("id_items");
+            a = div.getElementsByTagName("option");
+
+            // iterate through the entire list and output relevant results if found
+            for (var i = 0; i < a.length; i++) {
+                txtValue = a[i].textContent || a[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    a[i].style.display = "";
+                } else {
+                    a[i].style.display = "none";
+                }
+            }
+        }
+        
     $(document).ready(function () {
         $('#id_quantity').keyup(calculate);
         $('#id_sale_price').keyup(calculate);

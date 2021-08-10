@@ -49,6 +49,10 @@ class saleItemForm(ModelForm):
         model = sale_item
         fields = '__all__'
 
+    def __init__(self, *args, **kwargs):
+        super(saleItemForm, self).__init__(*args, **kwargs)
+        self.fields['items'].queryset = Item.objects.filter(is_stock=True).order_by('item_type')
+
 
 class createCustomerForm(ModelForm):
     class Meta:
