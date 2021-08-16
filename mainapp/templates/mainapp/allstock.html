@@ -50,12 +50,27 @@
     <td>{{i.model_name }}</td>
     <td>{{i.company_name}}</td>
     <td>{{i.size}}</td>
-    <td>{{i.quantity}}</td>
-    <td>{{i.price }}</td>
+    <td class="quantity">{{i.quantity}}</td>
+    <td class="price">{{i.price }}</td>
+    <td class ="total"></td>
   </tr>
   {% endfor %}
   
 </table>
       <p>{{ stock_price }}</p>
+{% endblock %}
+
+{% block extrajavascript %}
+<script>
+function multiply(){
+   var quantity = document.getElementsByClassName('quantity');
+  var price = document.getElementsByClassName('price');
+  var total = document.getElementsByClassName('total');
+  for (j = 0; j < quantity.length; j++) {
+    total[j].innerHTML = quantity[j].innerHTML * price[j].innerHTML;
+  }
+}
+multiply();
+</script>
 {% endblock %}
      
