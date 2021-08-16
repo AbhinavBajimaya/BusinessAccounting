@@ -10,7 +10,16 @@ import time
 
 
 def home_view(request):
-    return render(request, 'mainapp/home.html')
+    account = models.account.objects.last()
+    sales=models.sale_total.objects.all()
+    profit=0
+    for i in sales:
+        profit += i.profit
+    context={
+        "account":account,
+        "profit":profit
+    }
+    return render(request, 'mainapp/home.html',context)
 
 def view_all_stock_view(request):
     allstock=models.Item.objects.filter(is_stock=True)

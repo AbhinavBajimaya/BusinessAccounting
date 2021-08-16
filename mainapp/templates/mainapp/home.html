@@ -4,12 +4,30 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    <h2>ABHINAV TRADE AND SUPPLIERS</h2>
-    
+    <div>
+
+        <h1>ABHINAV TRADE AND SUPPLIERS</h1>
+        
+        <h4>Total Income: : <span id="income"> {{ account.revenue_in }} </span></h4>
+        <h4>Total Expense : {{account.expense_out }} </h4>
+        <h4>Total Profit : <span id="profit">{{ profit }}</span></h4>
+        <h4>Percentage : <span id="percent"> </span></h4>
+
+        
+    </div>
 
 
 {% endblock %}
 
 {% block form %}{% endblock %}
 
-{% block extrajavascript %}{% endblock %}
+{% block extrajavascript %}
+<script>
+    var income=document.getElementById('income').innerHTML;
+    var profit=document.getElementById('profit').innerHTML;
+    console.log(income);
+    var percent = (profit /(income-profit))*100 
+    console.log(parseInt(percent));
+    document.getElementById('percent').innerHTML= percent.toFixed(3)+'%';
+</script>
+{% endblock %}
