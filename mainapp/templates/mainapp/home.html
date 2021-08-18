@@ -4,18 +4,23 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
+<h1>ABHINAV TRADE AND SUPPLIERS</h1>
     <div>
 
-        <h1>ABHINAV TRADE AND SUPPLIERS</h1>
-        
         <h4>Total Income: : <span id="income"> {{ account.revenue_in }} </span></h4>
         <h4>Total Expense : {{account.expense_out }} </h4>
         <h4>Total Profit : <span id="profit">{{ profit }}</span></h4>
         <h4>Percentage : <span id="percent"> </span></h4>
-
         
     </div>
-
+        Get report for month 
+        {% csrf_token %}
+        <form action="{% url 'monthreport' %}" method="POST">
+            {% csrf_token %}
+            <input type="text" placeholder="enter month number" name='month'><button type="">Submit</button>
+        </form>
+    </div>
+    <div id = "monthreport"></div>
 
 {% endblock %}
 
@@ -25,9 +30,7 @@
 <script>
     var income=document.getElementById('income').innerHTML;
     var profit=document.getElementById('profit').innerHTML;
-    console.log(income);
     var percent = (profit /(income-profit))*100 
-    console.log(parseInt(percent));
     document.getElementById('percent').innerHTML= percent.toFixed(3)+'%';
 </script>
 {% endblock %}

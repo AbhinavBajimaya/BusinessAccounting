@@ -1,9 +1,11 @@
+from typing import ContextManager
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect
 from .import models
 from .forms import stockTotalForm,stockItemForm,createItemForm,createImporterForm,saleItemForm,saleTotalForm,createCustomerForm
 from datetime import datetime
 import time
+import pyBSDate
 
 # Create your views here.
 
@@ -225,6 +227,42 @@ def cus_credit_detail(request, id):
         
 
     return render(request, 'mainapp/cuscreditdetail.html', {"customer": customer})
+
+def view_month_report(request):
+    month=request.POST.get('month')
+    for i in range(1,34):
+        try:
+            b=pyBSDate.convert_BS_to_AD(2078,month,i)
+        except:
+            break;
+    i -=1
+
+    start=pyBSDate.convert_BS_to_AD(2078,month,1)
+    end=pyBSDate.convert_BS_to_AD(2078,month,i)
+
+    start_date=str(start[0])+'-'+str(start[1])+'-'+str(start[2])
+    end_date=str(end[0])+'-'+str(end[1])+'-'+str(end[2])
+    sale_list=models.sale_total.objects.filter(sold_att__range=[start_date,end_date])
+    income=0
+    profit = 0
+    for sale in sale_list:
+        income += sale.total_price
+        profit += sale.profit
+        
+    
+    context={
+        "sale_list":sale_list,
+        "profit": profit,
+        "income": income
+    }
+    return render(request, 'mainapp/monthreport.html',context)
+
+
+
+
+
+            
+
         
     
 

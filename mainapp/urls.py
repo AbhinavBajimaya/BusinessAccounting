@@ -30,5 +30,7 @@ urlpatterns=[
     path('impdetail/<int:id>/',views.imp_detail, name='impdetail'),
     path('cusdetail/<int:id>/',views.cus_detail, name='cusdetail'),
 
+    path('monthreport',views.view_month_report,name='monthreport'),
+
 
 ]

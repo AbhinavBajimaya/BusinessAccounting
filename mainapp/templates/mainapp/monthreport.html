@@ -1,0 +1,37 @@
+{% extends "mainapp/base.html" %}
+{% load static %}
+
+
+{% block title %}Month Report{% endblock %}
+
+{% block body %}
+<div>
+    <h4>Income : <span id="income">{{ income }}</span></h4>
+    <h4>Profit : <span id="profit">{{ profit }}</span></h4>
+    <h4>Percent : <span id="percent"></span></h4>
+       
+</div>
+<div>
+    <ol>
+        
+            {% for sale in sale_list %}
+            <li>
+                {{ sale }}
+            </li>
+            {% endfor %}
+        
+    </ol>
+</div>
+
+{% endblock %}
+
+{% block form %}{% endblock %}
+
+{% block extrajavascript %}
+<script>
+    var income = document.getElementById('income').innerHTML;
+    var profit = document.getElementById('profit').innerHTML;
+    var percent = (profit / (income - profit)) * 100
+    document.getElementById('percent').innerHTML = percent.toFixed(3) + '%';
+    
+</script>{% endblock %}
