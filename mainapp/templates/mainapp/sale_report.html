@@ -1,0 +1,31 @@
+{% extends "mainapp/base.html" %}
+{% load static %}
+
+
+{% block title %} {{sale_report}} {% endblock %}
+
+{% block body %}
+
+<h3>Customer: {{sale_report.customer.name}}</h3>
+<h3>Sold at: {{sale_report.sold_att}}</h3>
+<h3>Total Price: {{sale_report.total_price}}</h3>
+<h3>Total Paid: {{sale_report.total_paid}}</h3>
+<h3>Credit: {{sale_report.credit}}</h3>
+<h3>Profit: {{sale_report.profit}}</h3>
+<h3>
+    <ol>
+        {% for item in sale_report.items.all %}
+        <li>{{ item }}</li>
+        {% endfor %}
+
+    </ol>
+        
+</h3>
+
+
+
+{% endblock %}
+
+{% block form %}{% endblock %}
+
+{% block extrajavascript %}{% endblock %}

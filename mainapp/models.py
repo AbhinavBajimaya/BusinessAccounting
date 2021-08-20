@@ -75,7 +75,7 @@ class stock_item(models.Model):
 class stock_total(models.Model):
     importer=models.ForeignKey(Importer, on_delete=models.PROTECT)
     items=models.ManyToManyField(stock_item)
-    added_at = models.DateField(auto_now_add=True)
+    added_at = models.DateField(auto_now_add=False)
     total_price = models.DecimalField(max_digits=15, decimal_places=2,default=0)
     total_paid = models.DecimalField(max_digits=15, decimal_places=0, default=0)
     credit = models.DecimalField(max_digits=15, decimal_places=0,default=0)
@@ -100,7 +100,7 @@ class sale_item(models.Model):
     sale_price = models.DecimalField(max_digits=8, decimal_places=2)
     total_price = models.DecimalField(max_digits=15, decimal_places=2)
     def __str__(self):
-        return "(" + str(self.quantity) + ")" + self.items.model_name + " at " + str(self.sale_price) + " = " + str(self.sale_price*self.quantity)
+        return "(" + str(self.quantity) + ")" + self.items.item_type.name + " " + self.items.model_name + " at " + str(self.sale_price) + " = " + str(self.sale_price*self.quantity)
 
 #total sale bill items and quantities    
 class sale_total(models.Model):

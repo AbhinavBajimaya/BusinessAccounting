@@ -257,6 +257,11 @@ def view_month_report(request):
     }
     return render(request, 'mainapp/monthreport.html',context)
 
+def view_sale_report(request, id):
+    sale_report = models.sale_total.objects.get(id=id)
+    return render(request, 'mainapp/sale_report.html', {"sale_report": sale_report})
+
+
 
 
 

@@ -16,7 +16,7 @@
         
             {% for sale in sale_list %}
             <li>
-                {{ sale }}
+                <a href="{% url 'salereport' id=sale.id %}">{{ sale }}</a>
             </li>
             {% endfor %}
         
