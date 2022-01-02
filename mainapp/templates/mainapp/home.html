@@ -4,14 +4,12 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-<h1>ABHINAV TRADE AND SUPPLIERS</h1>
-    <div>
-
-        <h4>Total Income: : <span id="income"> {{ account.revenue_in }} </span></h4>
-        <h4>Total Expense : {{account.expense_out }} </h4>
-        <h4>Total Profit : <span id="profit">{{ profit }}</span></h4>
-        <h4>Percentage : <span id="percent"> </span></h4>
-        
+<h1>General</h1>
+    <div class="container" style="margin: 50px;">
+                <h4>Total Income: <span id="income"> {{ account.revenue_in }} </span></h4>  
+                <h4>Total Expense : {{account.expense_out }} </h4>         
+                <h4>Total Profit : <span id="profit">{{ profit }}</span></h4>            
+                <h4>Percentage : <span id="percent"> </span></h4>       
     </div>
         Get report for month 
         {% csrf_token %}
@@ -20,13 +18,22 @@
             <input type="text" placeholder="enter month number" name='month'><button type="">Submit</button>
         </form>
     </div>
-    <div id = "monthreport"></div>
+    
 
 {% endblock %}
 
 {% block form %}{% endblock %}
 
 {% block extrajavascript %}
+
+<style>
+    .col{
+        border: solid;
+        border-color: black;
+        margin: 10px;
+    }
+</style>
+
 <script>
     var income=document.getElementById('income').innerHTML;
     var profit=document.getElementById('profit').innerHTML;

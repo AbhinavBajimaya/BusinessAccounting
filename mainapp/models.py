@@ -9,6 +9,7 @@ import datetime
 #name and description of individual items.
 class Item_type(models.Model):
     name = models.CharField(max_length=50)
+
     def __str__(self):
         return self.name
     
@@ -61,7 +62,7 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
 
-#individual items and quantities on stocking
+#individual items and quantities on stocking 
 class stock_item(models.Model):    
     current=models.BooleanField(default=True)
     items=models.ForeignKey(Item, on_delete=models.PROTECT)
@@ -106,7 +107,7 @@ class sale_item(models.Model):
 class sale_total(models.Model):
     customer=models.ForeignKey(Customer, on_delete=models.PROTECT, blank=True, null=True)
     items=models.ManyToManyField(sale_item)  
-    sold_att = models.DateField(auto_now_add=True)  
+    sold_att = models.DateField(auto_now_add=False)  
     total_price = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     total_paid = models.DecimalField(max_digits=15, decimal_places=0, default=0)
     credit = models.DecimalField(max_digits=15, decimal_places=0, default=0)

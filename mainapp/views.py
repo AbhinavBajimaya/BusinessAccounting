@@ -6,6 +6,11 @@ from .forms import stockTotalForm,stockItemForm,createItemForm,createImporterFor
 from datetime import datetime
 import time
 import pyBSDate
+import json
+import numpy as np
+import matplotlib.pyplot as plot 
+
+
 
 # Create your views here.
 
@@ -211,7 +216,11 @@ def imp_credit_detail(request, id):
 
 def view_credit_customers(request):
     customers = models.Customer.objects.exclude(total_credit=0)
-    return render(request, 'mainapp/viewcreditcustomers.html', {'customers': customers})
+    total=0
+    for customer in customers:
+        total += customer.total_credit 
+        
+    return render(request, 'mainapp/viewcreditcustomers.html', {'customers': customers, 'total': total})
         
 def cus_credit_detail(request, id):
     customer = models.Customer.objects.get(id=id)
@@ -260,6 +269,23 @@ def view_month_report(request):
 def view_sale_report(request, id):
     sale_report = models.sale_total.objects.get(id=id)
     return render(request, 'mainapp/sale_report.html', {"sale_report": sale_report})
+
+def getreportbytype(request):
+    sale_list={}
+    item_types=models.Item_type.objects.all()
+    for item in item_types:
+        sale_list[item.name]=0
+    allsaleitems=models.sale_item.objects.all()
+    for i in allsaleitems:
+        sale_list[i.items.item_type.name] += int(i.total_price)
+    print(sale_list)
+    #list_json = json.dumps(sale_list)
+
+    #print(sale_list)
+    return render(request, 'mainapp/reportbytype.html', {"sale_list": sale_list})
+
+       
+    
 
 
 

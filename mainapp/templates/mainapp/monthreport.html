@@ -11,14 +11,24 @@
     <h4>Percent : <span id="percent"></span></h4>
        
 </div>
-<div>
-    <ol>
+<div class="container">
+    <ol> 
         
+
             {% for sale in sale_list %}
-            <li>
-                <a href="{% url 'salereport' id=sale.id %}">{{ sale }}</a>
-            </li>
+            
+            
+                
+                <li style="border: solid; border-color: rgb(80, 80, 119); margin: 4px; padding: 4px; ">
+                    <div>
+                        <a  href="{% url 'salereport' id=sale.id %}">{{ sale }}</a>
+                    </div>
+                </li>    
+                  
+            
+            
             {% endfor %}
+        
         
     </ol>
 </div>

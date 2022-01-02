@@ -5,6 +5,7 @@
   
 {% block title %} All Stock {% endblock %}
 {% block css %}
+
 <style>
 
   #stocktable {
@@ -32,6 +33,7 @@
   </style>
   {% endblock %}
   
+  
   {% block body %}
 
 <table id="stocktable">
@@ -40,9 +42,9 @@
     <th>Model</th>
     <th>Company</th>
     <th>Size</th>
-    <th>Quantity</th>
-    <th>Price</th>
-    <th>Total Price</th>
+    <th onclick="sortTable(4)">Quantity</th>
+    <th onclick="sortTable(5)" >Price</th>
+    <th onclick="sortTable(6)">Total Price</th>
   </tr>
   {% for i in allstock %}
   <tr>
@@ -61,6 +63,50 @@
 {% endblock %}
 
 {% block extrajavascript %}
+<script>
+
+  function sortTable(n){
+    var table,rows,switching,i,x,y,shouldSwitch,dir,switchcount=0;
+    table=document.getElementById("stocktable");
+    switching=true;
+    console.log(table);
+    dir="asc";
+    while(switching){
+      switching=false;
+      rows=table.rows;
+      for(i=1; i<(rows.length -1); i++){
+        shouldSwitch=false;
+        x=rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        if(dir=="asc"){
+          if (Number(x.innerHTML) > Number(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        }else if(dir=="desc"){
+          if (Number(x.innerHTML) < Number(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if(shouldSwitch){
+        rows[i].parentNode.insertBefore(rows[i+1],rows[i]);
+        switching=true;
+        switchcount++;
+      }
+      else{
+        if(switchcount==0 && dir =="asc"){
+          dir="desc";
+          switching=true;
+        }
+      }
+    }
+  }
+</script>
+
+
+
 <script>
 function multiply(){
    var quantity = document.getElementsByClassName('quantity');
