@@ -278,7 +278,6 @@ def getreportbytype(request):
     allsaleitems=models.sale_item.objects.all()
     for i in allsaleitems:
         sale_list[i.items.item_type.name] += int(i.total_price)
-    print(sale_list)
     #list_json = json.dumps(sale_list)
 
     #print(sale_list)
