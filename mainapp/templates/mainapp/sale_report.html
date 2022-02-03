@@ -4,23 +4,82 @@
 
 {% block title %} {{sale_report}} {% endblock %}
 
+{% block css %}
+
+<style>
+    #stocktable {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #stocktable td,
+    #stocktable th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #stocktable tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #stocktable tr:hover {
+        background-color: #ddd;
+    }
+
+    #stocktable th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #04AA6D;
+        color: white;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+</style>
+{% endblock %}
+
 {% block body %}
 
 <h3>Customer: {{sale_report.customer.name}}</h3>
 <h3>Sold at: {{sale_report.sold_att}}</h3>
+
+
+<div class="container">
+    <table id="stocktable">
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total Price</th>
+            <th></th>
+        </tr>
+        {% for item in sale_report.items.all %}
+        <tr>
+            <td> {{ item.items.item_type }} {{ item.items.model_name }} 
+                {% if item.items.size %}{{ item.items.size }} {% endif %}
+                 {% if item.items.size %}{{ item.items.company_name }} {% endif %}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.sale_price }}</td>
+            <td>{{ item.total_price }}</td>
+            <td><button onclick="">Return</button></td>
+        </tr>
+        </a>
+        {% endfor %}
+    </table>
+</div>
+
 <h3>Total Price: {{sale_report.total_price}}</h3>
 <h3>Total Paid: {{sale_report.total_paid}}</h3>
 <h3>Credit: {{sale_report.credit}}</h3>
 <h3>Profit: {{sale_report.profit}}</h3>
-<h3>
-    <ol>
-        {% for item in sale_report.items.all %}
-        <li>{{ item }}</li>
-        {% endfor %}
 
-    </ol>
+    
         
-</h3>
+
 
 
 

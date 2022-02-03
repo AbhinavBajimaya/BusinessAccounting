@@ -2,7 +2,7 @@ from typing import ContextManager
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect
 from .import models
-from .forms import stockTotalForm,stockItemForm,createItemForm,createImporterForm,saleItemForm,saleTotalForm,createCustomerForm
+from .forms import stockTotalForm,stockItemForm,createItemForm,createImporterForm,saleItemForm,saleTotalForm,createCustomerForm,ItemCategoryForm
 from datetime import datetime
 import time
 import pyBSDate
@@ -29,15 +29,33 @@ def home_view(request):
     return render(request, 'mainapp/home.html',context)
 
 def view_all_stock_view(request):
-    allstock=models.Item.objects.filter(is_stock=True)
-    obj=models.account.objects.first()
-    stock_price=obj.get_stock_price()
-    
-    context={
-        "allstock": allstock,
-        "stock_price": stock_price
+    if request.method == 'POST':
+        name= request.POST.get('itemtypes')
+        itemtypes=models.Item_type.objects.all()
+        itemtype=models.Item_type.objects.get(name=name)
+        print(itemtypes)
+        allstock=models.Item.objects.filter(item_type = itemtype).filter(is_stock=True)
+        print(allstock)
 
-    }
+        context={
+            'itemtypes' : itemtypes,
+            "allstock": allstock,
+            'itemtype': itemtype
+        }
+        
+        
+        
+
+    else:
+        itemtypes=models.Item_type.objects.all()
+        allstock=models.Item.objects.filter(is_stock=True)
+        obj=models.account.objects.first()
+        stock_price=obj.get_stock_price()   
+        context={
+            'itemtypes' : itemtypes,
+            "allstock": allstock,
+            "stock_price": stock_price
+        }
     return render(request, 'mainapp/allstock.html' ,context)
 
 def buy_item_view(request):

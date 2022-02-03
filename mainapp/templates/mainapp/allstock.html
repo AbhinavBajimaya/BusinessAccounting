@@ -36,7 +36,22 @@
   
   {% block body %}
 
+
+
 <table id="stocktable">
+  <form action="{% url 'viewstock' %}" method="POST">
+        {% csrf_token %}
+
+    <label for="itemtypes">View by:</label>
+    
+    <select name="itemtypes" id="itemtypes">
+      {% for i in itemtypes %}
+      <option value="{{ i.name }}">{{ i }}</option>
+      {% endfor %}
+      <input type="submit" value="Submit">
+    </select>
+  </form>
+  
   <tr>
     <th>Category</th>
     <th>Model</th>

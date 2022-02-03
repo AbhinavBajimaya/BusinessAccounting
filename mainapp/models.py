@@ -141,11 +141,13 @@ class account(models.Model):
 
     
 #in the case of customer returning an item
-#class return_item(models.Model):
- #   customer=models.ForeignKey(Customer, on_delete=models.PROTECT)
-  #  items=models.ForeignKey(Item, on_delete=models.PROTECT)
-   # quantity=models.PositiveIntegerField()
-    #returned_at=models.DateTimeField(auto_now_add=True)
+class return_item(models.Model):
+    customer=models.ForeignKey(Customer, on_delete=models.PROTECT)
+    items=models.ForeignKey(Item, on_delete=models.PROTECT)
+    quantity=models.PositiveIntegerField(default=1)
+    returned_at=models.DateTimeField(auto_now_add=False)
+    def __str__(self):
+        return self.customer.name + " " + "(" + str(self.quantity) + ")" + self.items.item_type.name + " " + self.items.model_name + " at " + str(self.sale_price) + " = " + str(self.sale_price*self.quantity)
 
 
 # added some comment

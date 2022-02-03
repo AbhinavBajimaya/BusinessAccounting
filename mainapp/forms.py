@@ -2,8 +2,6 @@ from django.forms import ModelForm
 from .models import stock_item,stock_total,Item,Importer,Customer,sale_item,sale_total,Item_type
 
 
-
-
 class stockTotalForm(ModelForm):
     
     class Meta:
@@ -57,6 +55,11 @@ class saleItemForm(ModelForm):
 class createCustomerForm(ModelForm):
     class Meta:
         model = Customer
+        fields = '__all__'
+
+class ItemCategoryForm(ModelForm):
+    class Meta:
+        model= Item_type
         fields = '__all__'
 
 
