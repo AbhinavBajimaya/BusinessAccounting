@@ -43,12 +43,12 @@
 {% endblock %}
 
 {% block body %}
+<div class="container">
 
 <h3>Customer: {{sale_report.customer.name}}</h3>
 <h3>Sold at: {{sale_report.sold_att}}</h3>
 
 
-<div class="container">
     <table id="stocktable">
         <tr>
             <th>Item</th>
@@ -70,12 +70,12 @@
         </a>
         {% endfor %}
     </table>
+    <h3>Total Price: {{sale_report.total_price}}</h3>
+    
+    <h3>Total Paid: {{sale_report.total_paid}}</h3>
+    <h3>Credit: {{sale_report.credit}}</h3>
+    <h3>Profit: {{sale_report.profit}}</h3>
 </div>
-
-<h3>Total Price: {{sale_report.total_price}}</h3>
-<h3>Total Paid: {{sale_report.total_paid}}</h3>
-<h3>Credit: {{sale_report.credit}}</h3>
-<h3>Profit: {{sale_report.profit}}</h3>
 
     
         

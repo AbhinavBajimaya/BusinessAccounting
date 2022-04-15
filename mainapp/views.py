@@ -8,7 +8,8 @@ import time
 import pyBSDate
 import json
 import numpy as np
-import matplotlib.pyplot as plot 
+import pandas as pd
+
 
 
 
@@ -22,9 +23,65 @@ def home_view(request):
     profit=0
     for i in sales:
         profit += i.profit
+
+    #current month
+    daysales=[]
+    dayprofit=[]
+    #get current nepali dat month year
+    #access all sale records of current date month
+    datetoday=datetime.now()
+    y=int(datetoday.strftime("%Y"))
+    m=int(datetoday.strftime("%m"))
+    d=int(datetoday.strftime("%d"))
+
+    nepalidate=pyBSDate.convert_AD_to_BS(y,m,d)
+    #print(nepalidate)
+
+    for i in range(1,34):
+        try:
+            b=pyBSDate.convert_BS_to_AD(nepalidate[0],nepalidate[1],i)
+        except:
+            break;
+    i -=1
+    #change to current
+    start=pyBSDate.convert_BS_to_AD(2078,12,1)
+    end=pyBSDate.convert_BS_to_AD(2078,12,30)
+
+    start_date=str(start[0])+'-'+str(start[1])+'-'+str(start[2])
+    end_date=str(end[0])+'-'+str(end[1])+'-'+str(end[2])
+
+    sale_list=models.sale_total.objects.filter(sold_att__range=[start_date,end_date])
+    
+    dict={}
+    for date in range(i):
+        #if len(str(date))==1:
+        #  date='0'+str(date)
+        dict['2078'+'-'+'12'+'-'+ str(date)]={'sales':0, 'profit':0}
+    
+    for sale in sale_list:
+        y=int(sale.sold_att.strftime("%Y"))
+        m=int(sale.sold_att.strftime("%m"))
+        d=int(sale.sold_att.strftime("%d"))
+        date2=pyBSDate.convert_AD_to_BS(y,m,d)
+        dict[str(date2[0])+'-'+str(date2[1])+'-'+str(date2[2])]['sales']+=sale.total_price
+        dict[str(date2[0])+'-'+str(date2[1])+'-'+str(date2[2])]['profit']+=sale.profit
+
+    daylist=[]
+    saleslist=[]
+    profitlist=[]
+    for i in dict.keys():
+        daylist.append(i)
+        saleslist.append(int(dict[i]['sales']))
+        profitlist.append(int(dict[i]['profit']))
+    print(len(daylist))
+    print(len(saleslist))
+    #current year
     context={
         "account":account,
-        "profit":profit
+        "profit":profit,
+        "daylist":daylist,
+        "saleslist":saleslist,
+        "profitlist":profitlist
     }
     return render(request, 'mainapp/home.html',context)
 
@@ -33,9 +90,8 @@ def view_all_stock_view(request):
         name= request.POST.get('itemtypes')
         itemtypes=models.Item_type.objects.all()
         itemtype=models.Item_type.objects.get(name=name)
-        print(itemtypes)
         allstock=models.Item.objects.filter(item_type = itemtype).filter(is_stock=True)
-        print(allstock)
+        #print(allstock)
 
         context={
             'itemtypes' : itemtypes,
@@ -43,9 +99,6 @@ def view_all_stock_view(request):
             'itemtype': itemtype
         }
         
-        
-        
-
     else:
         itemtypes=models.Item_type.objects.all()
         allstock=models.Item.objects.filter(is_stock=True)
@@ -92,7 +145,7 @@ def add_item_view(request):
         form2=stockItemForm(request.POST)
         if form2.is_valid():
             in_price_cost =request.POST.get('in_price')
-            print(in_price_cost)
+            #print(in_price_cost)
             item=form2.cleaned_data['items']
             form2.save()
             if in_price_cost==item.price:
@@ -123,7 +176,14 @@ def create_new_item_view(request, way):
     
 def view_all_importers(request):
     importers=models.Importer.objects.all()
-    return render(request, 'mainapp/viewimporters.html', {'importers' :importers})
+    imp=models.Importer.objects.all().values()
+    df=pd.DataFrame(imp)
+    df1=df.name.tolist()
+    df=df['total_amount'].tolist()
+    df2=[]
+    for i in df:
+        df2.append(int(i))
+    return render(request, 'mainapp/viewimporters.html', {'importers' :importers,'df1':df1,'df2':df2})
 
 def imp_detail(request ,id):
     importer = models.Importer.objects.get(id=id)
@@ -200,7 +260,7 @@ def add_sale_item_view(request):
         if form2.is_valid():
             quantity = request.POST.get('quantity')
             item =request.POST.get('items')
-            print(item)
+            #print(item)
             req_item=models.Item.objects.get(id=item)
             if int(quantity) <= req_item.quantity:
                 form2.save()   

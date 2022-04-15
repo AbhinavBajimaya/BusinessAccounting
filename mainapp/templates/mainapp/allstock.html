@@ -72,9 +72,16 @@
     <td class ="total"></td>
   </tr>
   {% endfor %}
-  
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>Total</td>
+    <td><span id="sumPrice"></span></td>
+  </tr>
 </table>
-      <p>{{ stock_price }}</p>
 {% endblock %}
 
 {% block extrajavascript %}
@@ -132,6 +139,18 @@ function multiply(){
   }
 }
 multiply();
+function add(){
+  sum=0;
+  var total= document.getElementsByClassName('total');
+  for(let i=0 ;i<total.length;i++){
+    sum = sum + parseInt(total.item(i).innerHTML);
+  }
+  var sumPrice = document.getElementById('sumPrice');
+  sumPrice.innerHTML=sum;
+
+
+}
+add();
 </script>
 {% endblock %}
      

@@ -5,35 +5,99 @@
 
 {% block body %}
 <h1>General</h1>
-    <div class="container" style="margin: 50px;">
-                <h4>Total Income: <span id="income"> {{ account.revenue_in }} </span></h4>  
-                <h4>Total Expense : {{account.expense_out }} </h4>         
-                <h4>Total Profit : <span id="profit">{{ profit }}</span></h4>            
-                <h4>Percentage : <span id="percent"> </span></h4>       
+<div style="width: 50%;">
+    <canvas id="myChart"></canvas>
+    
+</div>
+
+<div class="flex-container" style="margin: 50px;">
+    <div style="margin: auto; border-color: green; border-style: double;">
+        <h4>Total Income: <span id="income"> {{ account.revenue_in }} </span></h4>
+    </div> 
+    <div style="margin: auto;">
+        <h4>Total Expense : {{account.expense_out }} </h4>         
+        
+    </div> 
+    <div style="margin: auto;">
+        
+        <h4>Total Profit : <span id="profit">{{ profit }}</span></h4>            
     </div>
-        Get report for month 
-        {% csrf_token %}
-        <form action="{% url 'monthreport' %}" method="POST">
-            {% csrf_token %}
-            <input type="text" placeholder="enter month number" name='month'><button type="">Submit</button>
-        </form>
+    <div style="margin: auto;">
+        
+        <h4>Percentage : <span id="percent"> </span></h4>       
     </div>
     
+</div>
+<div>    
+</div>
+Get report for month 
+{% csrf_token %}
+<form action="{% url 'monthreport' %}" method="POST">
+    {% csrf_token %}
+    <input type="text" placeholder="enter month number" name='month'><button type="">Submit</button>
+</form>
+</div>
+
 
 {% endblock %}
+
 
 {% block form %}{% endblock %}
 
 {% block extrajavascript %}
 
+
 <style>
+    .flex-container {
+  display: flex;
+  justify-content: center;
+}
     .col{
         border: solid;
         border-color: black;
         margin: 10px;
     }
 </style>
-
+<script>
+    const label = {{ daylist| safe}};
+    const data = {{ saleslist| safe}};
+    console.log(label);
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: label,
+            datasets: [{
+                label: 'saleslist this month ',
+                data: data,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 <script>
     var income=document.getElementById('income').innerHTML;
     var profit=document.getElementById('profit').innerHTML;

@@ -8,6 +8,8 @@
     <title>{% block title %}{% endblock %}</title>
     <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -77,11 +79,11 @@
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="{% url 'getreportbytype' %}">Something else here</a></li>
+              <li><a class="dropdown-item" href="">Something else here</a></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" href="" tabindex="-1" aria-disabled="true">Analyze</a>
+            <a class="nav-link" href="{% url 'getreportbytype' %}" tabindex="-1">Analyze</a>
           </li>
         </ul>
         <form class="d-flex">
