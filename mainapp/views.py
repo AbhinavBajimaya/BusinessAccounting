@@ -27,7 +27,7 @@ def home_view(request):
     #current month
     daysales=[]
     dayprofit=[]
-    #get current nepali dat month year
+    #get current nepali date month year
     #access all sale records of current date month
     datetoday=datetime.now()
     y=int(datetoday.strftime("%Y"))
@@ -44,8 +44,8 @@ def home_view(request):
             break;
     i -=1
     #change to current
-    start=pyBSDate.convert_BS_to_AD(2078,12,1)
-    end=pyBSDate.convert_BS_to_AD(2078,12,30)
+    start=pyBSDate.convert_BS_to_AD(nepalidate[0],nepalidate[1],1)
+    end=pyBSDate.convert_BS_to_AD(nepalidate[0],nepalidate[1],30)
 
     start_date=str(start[0])+'-'+str(start[1])+'-'+str(start[2])
     end_date=str(end[0])+'-'+str(end[1])+'-'+str(end[2])
@@ -56,7 +56,7 @@ def home_view(request):
     for date in range(i):
         #if len(str(date))==1:
         #  date='0'+str(date)
-        dict['2078'+'-'+'12'+'-'+ str(date)]={'sales':0, 'profit':0}
+        dict[str(nepalidate[0])+'-'+str(nepalidate[1])+'-'+ str(date)]={'sales':0, 'profit':0}
     
     for sale in sale_list:
         y=int(sale.sold_att.strftime("%Y"))
@@ -73,8 +73,6 @@ def home_view(request):
         daylist.append(i)
         saleslist.append(int(dict[i]['sales']))
         profitlist.append(int(dict[i]['profit']))
-    print(len(daylist))
-    print(len(saleslist))
     #current year
     context={
         "account":account,
@@ -91,8 +89,6 @@ def view_all_stock_view(request):
         itemtypes=models.Item_type.objects.all()
         itemtype=models.Item_type.objects.get(name=name)
         allstock=models.Item.objects.filter(item_type = itemtype).filter(is_stock=True)
-        #print(allstock)
-
         context={
             'itemtypes' : itemtypes,
             "allstock": allstock,
@@ -145,7 +141,6 @@ def add_item_view(request):
         form2=stockItemForm(request.POST)
         if form2.is_valid():
             in_price_cost =request.POST.get('in_price')
-            #print(in_price_cost)
             item=form2.cleaned_data['items']
             form2.save()
             if in_price_cost==item.price:
@@ -260,7 +255,6 @@ def add_sale_item_view(request):
         if form2.is_valid():
             quantity = request.POST.get('quantity')
             item =request.POST.get('items')
-            #print(item)
             req_item=models.Item.objects.get(id=item)
             if int(quantity) <= req_item.quantity:
                 form2.save()   
@@ -317,15 +311,16 @@ def cus_credit_detail(request, id):
 
 def view_month_report(request):
     month=request.POST.get('month')
+    year=request.POST.get('year')
     for i in range(1,34):
         try:
-            b=pyBSDate.convert_BS_to_AD(2078,month,i)
+            b=pyBSDate.convert_BS_to_AD(year,month,i)
         except:
             break;
     i -=1
 
-    start=pyBSDate.convert_BS_to_AD(2078,month,1)
-    end=pyBSDate.convert_BS_to_AD(2078,month,i)
+    start=pyBSDate.convert_BS_to_AD(year,month,1)
+    end=pyBSDate.convert_BS_to_AD(year,month,i)
 
     start_date=str(start[0])+'-'+str(start[1])+'-'+str(start[2])
     end_date=str(end[0])+'-'+str(end[1])+'-'+str(end[2])
@@ -342,6 +337,7 @@ def view_month_report(request):
         "profit": profit,
         "income": income
     }
+
     return render(request, 'mainapp/monthreport.html',context)
 
 def view_sale_report(request, id):
@@ -356,9 +352,6 @@ def getreportbytype(request):
     allsaleitems=models.sale_item.objects.all()
     for i in allsaleitems:
         sale_list[i.items.item_type.name] += int(i.total_price)
-    #list_json = json.dumps(sale_list)
-
-    #print(sale_list)
     return render(request, 'mainapp/reportbytype.html', {"sale_list": sale_list})
 
        
