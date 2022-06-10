@@ -6,40 +6,11 @@
 
 {% block css %}
 
-<style>
-    #stocktable {
-        font-family: Arial, Helvetica, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
 
-    #stocktable td,
-    #stocktable th {
-        border: 1px solid #ddd;
-        padding: 8px;
-    }
 
-    #stocktable tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
+    
+    <link rel="stylesheet" type='text/css' href="{% static 'mainapp/css/tablestyle.css' %}">
 
-    #stocktable tr:hover {
-        background-color: #ddd;
-    }
-
-    #stocktable th {
-        padding-top: 12px;
-        padding-bottom: 12px;
-        text-align: left;
-        background-color: #04AA6D;
-        color: white;
-    }
-
-    a {
-        text-decoration: none;
-        color: black;
-    }
-</style>
 {% endblock %}
 
 
@@ -48,12 +19,14 @@
 <div class="container">
     <table id="stocktable">
         <tr>
+            <th>Id</th>
             <th>Customer</th>
             <th onclick="sortTable(1)">Total Sales</th>
         </tr>
         {% for c in customers %}
 
         <tr>
+            <td></td>
             <td><a href="{% url 'cusdetail' id=c.id %}"> {{ c.name }}</a></td>
             <td>{{ c.total_amount }}</td>
         </tr>

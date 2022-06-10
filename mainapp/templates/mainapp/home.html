@@ -30,14 +30,6 @@
 </div>
 <div>    
 </div>
-Get report for month 
-{% csrf_token %}
-<form action="{% url 'monthreport' %}" method="POST">
-    {% csrf_token %}
-    <input type="text" placeholder="enter month number" name='month' value="1">
-    <input type ="text" placeholder="enter year" name="year" value="2079">
-    <button type="">Submit</button>
-</form>
 </div>
 
 
@@ -66,7 +58,7 @@ Get report for month
     console.log(label);
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: label,
             datasets: [{

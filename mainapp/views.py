@@ -216,7 +216,10 @@ def create_customer(request):
 
 def cus_detail(request ,id):
     customer = models.Customer.objects.get(id=id)
-    return render(request, 'mainapp/cusdetail.html', {'customer': customer})
+    customer_buy_records=models.sale_total.objects.filter(customer=id)
+    #print(customer_buy_records)
+
+    return render(request, 'mainapp/cusdetail.html', {'customer': customer,'customer_buy_records':customer_buy_records})
 
 
 

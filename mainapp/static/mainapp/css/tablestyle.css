@@ -1,0 +1,45 @@
+#stocktable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#stocktable td,
+#stocktable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#stocktable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#stocktable tr:hover {
+    background-color: #ddd;
+}
+
+#stocktable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+table tr:nth-child(2) {
+    counter-reset: rowNumber;
+}
+
+table tr {
+    counter-increment: rowNumber;
+}
+
+table tr td:first-child::before {
+    content: counter(rowNumber);
+
+}

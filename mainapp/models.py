@@ -24,9 +24,9 @@ class Item(models.Model):
     total_in_quantity = models.PositiveIntegerField(default=0)
     def __str__(self):
         if str(self.size)=="None":
-            return self.item_type.name + " " + self.model_name + " " + self.company_name
+            return self.item_type.name + " " + self.model_name + " " + self.company_name + " " + str(self.price)
         else:
-            return self.item_type.name + " " + self.model_name + " " + self.size + " " + self.company_name
+            return self.item_type.name + " " + self.model_name + " " + self.size + " " + self.company_name + " " + str(self.price)
 
     def set_is_stock(self):
         if self.quantity == 0:
@@ -141,13 +141,13 @@ class account(models.Model):
 
     
 #in the case of customer returning an item
-class return_item(models.Model):
-    customer=models.ForeignKey(Customer, on_delete=models.PROTECT)
-    items=models.ForeignKey(Item, on_delete=models.PROTECT)
-    quantity=models.PositiveIntegerField(default=1)
-    returned_at=models.DateTimeField(auto_now_add=False)
-    def __str__(self):
-        return self.customer.name + " " + "(" + str(self.quantity) + ")" + self.items.item_type.name + " " + self.items.model_name + " at " + str(self.sale_price) + " = " + str(self.sale_price*self.quantity)
+# class return_item(models.Model):
+#     customer=models.ForeignKey(Customer, on_delete=models.PROTECT)
+#     items=models.ForeignKey(Item, on_delete=models.PROTECT)
+#     quantity=models.PositiveIntegerField(default=1)
+#     returned_at=models.DateTimeField(auto_now_add=False)
+#     def __str__(self):
+#         return self.customer.name + " " + "(" + str(self.quantity) + ")" + self.items.item_type.name + " " + self.items.model_name + " at " + str(self.sale_price) + " = " + str(self.sale_price*self.quantity)
 
 
 # added some comment
