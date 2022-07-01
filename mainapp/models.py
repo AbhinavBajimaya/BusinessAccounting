@@ -98,6 +98,8 @@ class sale_item(models.Model):
     current = models.BooleanField(default=True)
     items = models.ForeignKey(Item, on_delete=models.PROTECT)
     quantity = models.PositiveIntegerField()
+    cost_price=models.DecimalField(default=0,max_digits=8, decimal_places=2)
+    profit=models.DecimalField(default=0,max_digits=8, decimal_places=2)
     sale_price = models.DecimalField(max_digits=8, decimal_places=2)
     total_price = models.DecimalField(max_digits=15, decimal_places=2)
     def __str__(self):
@@ -152,7 +154,7 @@ class account(models.Model):
 
 # added some comment
 
-    
+
 
 
 

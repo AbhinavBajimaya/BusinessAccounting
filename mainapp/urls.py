@@ -34,9 +34,7 @@ urlpatterns=[
     path('monthreport/salereport/<int:id>/',views.view_sale_report, name='salereport'),
 
     path('reportbytype',views.getreportbytype,name='getreportbytype'),
-
-
-    
+    path('export',views.export_to_csv,name='export'),
 
 
 ]

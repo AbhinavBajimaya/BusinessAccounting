@@ -37,9 +37,14 @@
     $(document).ready(function () {
         $('#id_quantity').keyup(calculate);
         $('#id_sale_price').keyup(calculate);
+        $('#id_profit').keyup(calculate);
+        $('#id_cost_price').keyup(calculate);
+        $('#id_items').keyup(calculate);
     });
     function calculate(e) {
         $('#id_total_price').val($('#id_quantity').val() * $('#id_sale_price').val());
+        $('#id_profit').val($('#id_quantity').val()*($('#id_sale_price').val() - $('#id_cost_price').val()));
+
     }
 
 </script>

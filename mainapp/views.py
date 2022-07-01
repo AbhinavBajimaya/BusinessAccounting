@@ -7,9 +7,8 @@ from datetime import datetime
 import time
 import pyBSDate
 import json
-import numpy as np
-import pandas as pd
-
+from django.http import HttpResponse, HttpResponseRedirect
+import csv
 
 
 
@@ -356,10 +355,19 @@ def getreportbytype(request):
     for i in allsaleitems:
         sale_list[i.items.item_type.name] += int(i.total_price)
     return render(request, 'mainapp/reportbytype.html', {"sale_list": sale_list})
-
-       
+ 
     
+def export_to_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    writer=csv.writer(response)
+    writer.writerow(['customer','customer','customerAddress','TotalBoughtByCustomer','CreditOfCustomer','ItemType','Model','Company','Size','CostPrice','TotalBoughtSelf','quantitySold','salePrice','totalSalePrice','date','totalBillPrice','totalBillPaid','totalBillcredit','billProfit'])
 
+    for sale in models.sale_total.objects.all().values_list('customer__name','customer__owner_name','customer__address','customer__total_amount','customer__total_credit','items__items__item_type__name','items__items__model_name','items__items__company_name','items__items__size','items__items__price','items__items__total_in_quantity','items__quantity','items__sale_price','items__total_price','sold_att','total_price','total_paid','credit','profit'):
+        writer.writerow(sale)
+
+    response['Content-Disposition']='attachment; filename="saletotalfinal.csv"'
+    return response
+    
 
 
 
